@@ -8,6 +8,13 @@
   "engines": {
     "node": ">=11.0.0"
   },
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Normalizex/0x-api-swap.git"
@@ -15,6 +22,17 @@
   "homepage": "https://github.com/Normalizex/1inch-api-v4#readme",
   "author": "Normalizex",
   "license": "Apache-2.0",
+  "keywords": [
+    "web3",
+    "axios",
+    "0x",
+    "api",
+    "wrapper",
+    "defi",
+    "blockchain",
+    "https",
+    "async"
+  ],
   "devDependencies": {
     "typescript": "^4.6.4"
   },

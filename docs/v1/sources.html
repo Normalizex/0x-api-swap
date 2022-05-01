@@ -1,0 +1,493 @@
+<html><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+	<style>
+		html, body {
+			-webkit-font-smoothing: antialiased;
+			text-rendering: optimizelegibility;
+			width: 100%;
+			height:100%;
+			overflow: hidden;
+			user-select: none;
+			outline: none;
+		}
+		body.dragging * {
+			cursor: grabbing !important;
+		}
+		* {
+			box-sizing: border-box;
+		}
+		*:focus, *:hover {
+			outline: none;
+		}
+		.gitbook-root, .gitbook-splashscreen { position: fixed; top:0; right: 0; bottom: 0; left: 0; display:flex; width: 100%; height:100%; }
+		.slate-spacer {
+			height: 0;
+			color: transparent;
+			outline: none;
+			position: absolute;
+		}
+		@keyframes LoadingIndicator {
+			from { transform: rotate(0deg); }
+			to { transform: rotate(360deg); }
+		}
+		[data-loading-indicator="true"] {
+			animation: LoadingIndicator 0.6s ease infinite;
+		}
+	</style>
+	<title>GET /swap/v1/quote - 0x Documentation</title>
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/Inter/Inter-Bold.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/Inter/Inter-BoldItalic.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/Inter/Inter-ExtraBold.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/Inter/Inter-ExtraBoldItalic.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/Inter/Inter-Medium.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/Inter/Inter-MediumItalic.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/Inter/Inter-Regular.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/Inter/Inter-Italic.woff2?v=3.19" crossorigin="anonymous">
+	<style id="__font-Inter-gitbook-content-font">
+		@font-face {
+		font-family: 'gitbook-content-font';
+		font-style:  normal;
+		font-weight: 700;
+		font-display: swap;
+		src: local("Inter Bold"), local("Inter-Bold"), url("https://app.gitbook.com/public/fonts/Inter/Inter-Bold.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/Inter/Inter-Bold.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-content-font';
+		font-style:  italic;
+		font-weight: 700;
+		font-display: swap;
+		src: local("Inter BoldItalic"), local("Inter-BoldItalic"), url("https://app.gitbook.com/public/fonts/Inter/Inter-BoldItalic.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/Inter/Inter-BoldItalic.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-content-font';
+		font-style:  normal;
+		font-weight: 800;
+		font-display: swap;
+		src: local("Inter ExtraBold"), local("Inter-ExtraBold"), url("https://app.gitbook.com/public/fonts/Inter/Inter-ExtraBold.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/Inter/Inter-ExtraBold.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-content-font';
+		font-style:  italic;
+		font-weight: 800;
+		font-display: swap;
+		src: local("Inter ExtraBoldItalic"), local("Inter-ExtraBoldItalic"), url("https://app.gitbook.com/public/fonts/Inter/Inter-ExtraBoldItalic.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/Inter/Inter-ExtraBoldItalic.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-content-font';
+		font-style:  normal;
+		font-weight: 500;
+		font-display: swap;
+		src: local("Inter Medium"), local("Inter-Medium"), url("https://app.gitbook.com/public/fonts/Inter/Inter-Medium.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/Inter/Inter-Medium.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-content-font';
+		font-style:  italic;
+		font-weight: 500;
+		font-display: swap;
+		src: local("Inter MediumItalic"), local("Inter-MediumItalic"), url("https://app.gitbook.com/public/fonts/Inter/Inter-MediumItalic.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/Inter/Inter-MediumItalic.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-content-font';
+		font-style:  normal;
+		font-weight: 400;
+		font-display: swap;
+		src: local("Inter Regular"), local("Inter-Regular"), url("https://app.gitbook.com/public/fonts/Inter/Inter-Regular.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/Inter/Inter-Regular.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-content-font';
+		font-style:  italic;
+		font-weight: 400;
+		font-display: swap;
+		src: local("Inter Italic"), local("Inter-Italic"), url("https://app.gitbook.com/public/fonts/Inter/Inter-Italic.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/Inter/Inter-Italic.woff?v=3.19") format("woff");
+	}
+	</style>
+<meta name="description" content="" id="__meta-description">
+<meta name="og:description" content="" id="__meta-og:description">
+<meta name="og:image" content="https://app.gitbook.com/share/space/thumbnail/KX9pG8rH3DbKDOvV7di7/page/T2TpKqbKkDXZtbqzPlgG.png?color=&amp;logo=https%3A%2F%2F1690203644-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FKX9pG8rH3DbKDOvV7di7%252Ficon%252F1nKfBhLbPxd2KuXchHET%252F0x%2520logo.png%3Falt%3Dmedia%26token%3D25a85a3e-7f72-47ea-a8b2-e28c0d24074b&amp;theme=dark" id="__meta-og:image">
+<meta name="twitter:card" content="summary_large_image" id="__meta-twitter:card">
+<meta name="og:title" content="GET /swap/v1/quote" id="__meta-og:title">
+<meta name="twitter:site" content="0x Documentation" id="__meta-twitter:site">
+<meta name="robots" content="index" id="__meta-robots">
+<link rel="icon" href="https://1690203644-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FKX9pG8rH3DbKDOvV7di7%2Ficon%2F1nKfBhLbPxd2KuXchHET%2F0x%20logo.png?alt=media&amp;token=25a85a3e-7f72-47ea-a8b2-e28c0d24074b" id="__link-icon">
+<link rel="stylesheet" href="https://app.gitbook.com/public/emojis/emoji-assets-sprite.css?v=6.0.0" type="text/css" media="all">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Bold.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-BoldItalic.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Black.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-BlackItalic.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Medium.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-MediumItalic.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Regular.woff2?v=3.19" crossorigin="anonymous">
+<link rel="preload" as="font" type="font/woff2" href="https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Italic.woff2?v=3.19" crossorigin="anonymous">
+	<style id="__font-SourceCodePro-gitbook-code-font">
+		@font-face {
+		font-family: 'gitbook-code-font';
+		font-style:  normal;
+		font-weight: 700;
+		font-display: swap;
+		src: local("Source Code Pro Bold"), local("SourceCodePro-Bold"), url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Bold.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Bold.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-code-font';
+		font-style:  italic;
+		font-weight: 700;
+		font-display: swap;
+		src: local("Source Code Pro BoldItalic"), local("SourceCodePro-BoldItalic"), url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-BoldItalic.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-BoldItalic.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-code-font';
+		font-style:  normal;
+		font-weight: 800;
+		font-display: swap;
+		src: local("Source Code Pro Black"), local("SourceCodePro-Black"), url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Black.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Black.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-code-font';
+		font-style:  italic;
+		font-weight: 800;
+		font-display: swap;
+		src: local("Source Code Pro BlackItalic"), local("SourceCodePro-BlackItalic"), url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-BlackItalic.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-BlackItalic.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-code-font';
+		font-style:  normal;
+		font-weight: 500;
+		font-display: swap;
+		src: local("Source Code Pro Medium"), local("SourceCodePro-Medium"), url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Medium.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Medium.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-code-font';
+		font-style:  italic;
+		font-weight: 500;
+		font-display: swap;
+		src: local("Source Code Pro MediumItalic"), local("SourceCodePro-MediumItalic"), url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-MediumItalic.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-MediumItalic.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-code-font';
+		font-style:  normal;
+		font-weight: 400;
+		font-display: swap;
+		src: local("Source Code Pro Regular"), local("SourceCodePro-Regular"), url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Regular.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Regular.woff?v=3.19") format("woff");
+	}
+@font-face {
+		font-family: 'gitbook-code-font';
+		font-style:  italic;
+		font-weight: 400;
+		font-display: swap;
+		src: local("Source Code Pro Italic"), local("SourceCodePro-Italic"), url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Italic.woff2?v=3.19") format("woff2"),
+				url("https://app.gitbook.com/public/fonts/SourceCodePro/SourceCodePro-Italic.woff?v=3.19") format("woff");
+	}
+	</style>
+
+			<link rel="modulepreload" href="https://app.gitbook.com/public/app/chunks/json.lazy-PUBGLUSP.min.js">
+			<script type="module" defer="" src="https://app.gitbook.com/public/app/public-H672QW55.min.js?v=10.9.78-ec0590f9830639fcb45891f41c2c1ac6132a60a1-2245154232"></script>
+		<style id="react-native-stylesheet">[stylesheet-group="0"]{}
+html{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+body{margin:0;}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+input::-webkit-search-cancel-button,input::-webkit-search-decoration,input::-webkit-search-results-button,input::-webkit-search-results-decoration{display:none;}
+[stylesheet-group="0.1"]{}
+:focus:not([data-focusvisible-polyfill]){outline: none;}
+[stylesheet-group="0.5"]{}
+.css-4rbku5{background-color:rgba(0,0,0,0.00);color:inherit;font:inherit;list-style:none;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;text-align:inherit;text-decoration:none;}
+[stylesheet-group="1"]{}
+.css-1dbjc4n{-ms-flex-align:stretch;-ms-flex-direction:column;-ms-flex-negative:0;-ms-flex-preferred-size:auto;-webkit-align-items:stretch;-webkit-box-align:stretch;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-basis:auto;-webkit-flex-direction:column;-webkit-flex-shrink:0;align-items:stretch;border:0 solid black;box-sizing:border-box;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;flex-basis:auto;flex-direction:column;flex-shrink:0;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;min-height:0px;min-width:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;position:relative;z-index:0;}
+.css-901oao{border:0 solid black;box-sizing:border-box;color:rgba(0,0,0,1.00);display:inline;font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;white-space:pre-wrap;word-wrap:break-word;}
+.css-vcwn7f{max-width:100%;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;white-space:pre;}
+.css-16my406{color:inherit;font:inherit;white-space:inherit;}
+.css-9pa8cd{bottom:0px;height:100%;left:0px;opacity:0;position:absolute;right:0px;top:0px;width:100%;z-index:-1;}
+.css-cens5h{-webkit-box-orient:vertical;display:-webkit-box;max-width:100%;overflow-x:hidden;overflow-y:hidden;text-overflow:ellipsis;}
+[stylesheet-group="2"]{}
+.r-13awgt0{-ms-flex:1 1 0%;-webkit-flex:1;flex:1;}
+.r-42olwf{border-bottom-color:rgba(0,0,0,0.00);border-left-color:rgba(0,0,0,0.00);border-right-color:rgba(0,0,0,0.00);border-top-color:rgba(0,0,0,0.00);}
+.r-rs99b7{border-bottom-width:1px;border-left-width:1px;border-right-width:1px;border-top-width:1px;}
+.r-z2wwpe{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-top-left-radius:4px;border-top-right-radius:4px;}
+.r-18c69zk{border-bottom-left-radius:100px;border-bottom-right-radius:100px;border-top-left-radius:100px;border-top-right-radius:100px;}
+.r-1udh08x{overflow-x:hidden;overflow-y:hidden;}
+.r-4qtqp9{display:inline-block;}
+.r-156hn8l{border-bottom-color:rgba(211,220,228,1.00);border-left-color:rgba(211,220,228,1.00);border-right-color:rgba(211,220,228,1.00);border-top-color:rgba(211,220,228,1.00);}
+.r-190qawg{border-bottom-color:rgba(227,232,237,1.00);border-left-color:rgba(227,232,237,1.00);border-right-color:rgba(227,232,237,1.00);border-top-color:rgba(227,232,237,1.00);}
+.r-nsbfu8{padding-bottom:16px;padding-left:16px;padding-right:16px;padding-top:16px;}
+.r-1xc7w19{border-bottom-color:rgba(0,0,0,1.00);border-left-color:rgba(0,0,0,1.00);border-right-color:rgba(0,0,0,1.00);border-top-color:rgba(0,0,0,1.00);}
+.r-1phboty{border-bottom-style:solid;border-left-style:solid;border-right-style:solid;border-top-style:solid;}
+.r-1yadl64{border-bottom-width:0px;border-left-width:0px;border-right-width:0px;border-top-width:0px;}
+.r-6koalj{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;}
+.r-crgep1{margin-bottom:0px;margin-left:0px;margin-right:0px;margin-top:0px;}
+.r-t60dpp{padding-bottom:0px;padding-left:0px;padding-right:0px;padding-top:0px;}
+.r-1jwulwa{overflow-x:scroll;overflow-y:scroll;}
+.r-m9k8lk{border-bottom-color:rgba(223,255,240,1.00);border-left-color:rgba(223,255,240,1.00);border-right-color:rgba(223,255,240,1.00);border-top-color:rgba(223,255,240,1.00);}
+.r-xoduu5{display:-webkit-inline-box;display:-moz-inline-box;display:-ms-inline-flexbox;display:-webkit-inline-flex;display:inline-flex;}
+.r-1471scf{display:inline;}
+[stylesheet-group="2.1"]{}
+.r-ymttw5{padding-left:16px;padding-right:16px;}
+.r-mk0yit{padding-left:0px;padding-right:0px;}
+.r-1e081e0{padding-left:12px;padding-right:12px;}
+.r-1pn2ns4{padding-left:8px;padding-right:8px;}
+.r-1yzf0co{padding-bottom:16px;padding-top:16px;}
+.r-5njf8e{padding-bottom:8px;padding-top:8px;}
+.r-1r5su4o{margin-bottom:16px;margin-top:16px;}
+.r-pw2am6{margin-bottom:24px;margin-top:24px;}
+.r-1h4fu65{padding-bottom:24px;padding-top:24px;}
+.r-1guathk{padding-left:24px;padding-right:24px;}
+.r-oyd9sg{padding-bottom:4px;padding-top:4px;}
+.r-1p4rafz{padding-left:2px;padding-right:2px;}
+[stylesheet-group="2.2"]{}
+.r-12vffkv>*{pointer-events:auto;}
+.r-12vffkv{pointer-events:none!important;}
+.r-2jelyo{background-color:rgba(24,28,31,1.00);}
+.r-1y14msn{border-bottom-color:rgba(55,65,81,1.00);}
+.r-qklmqi{border-bottom-width:1px;}
+.r-111w7nw{box-shadow:0px 1px 2px rgba(0,0,0,0.69);}
+.r-1quu1zo{;}
+.r-184en5c{z-index:1;}
+.r-18u37iz{-ms-flex-direction:row;-webkit-box-direction:normal;-webkit-box-orient:horizontal;-webkit-flex-direction:row;flex-direction:row;}
+.r-1awozwy{-ms-flex-align:center;-webkit-align-items:center;-webkit-box-align:center;align-items:center;}
+.r-eafdt9{-webkit-transition-duration:0.15s;transition-duration:0.15s;}
+.r-1i6wzkk{-moz-transition-property:opacity;-webkit-transition-property:opacity;transition-property:opacity;}
+.r-lrvibr{-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none;user-select:none;}
+.r-1loqt21{cursor:pointer;}
+.r-1otgn73{-ms-touch-action:manipulation;touch-action:manipulation;}
+.r-18kxxzh{-ms-flex-positive:0;-webkit-box-flex:0;-webkit-flex-grow:0;flex-grow:0;}
+.r-1777fci{-ms-flex-pack:center;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;}
+.r-1ny4l3l{outline-style:none;}
+.r-eu3ka{height:40px;}
+.r-1f2v84d{color:rgba(204,207,212,1.00);}
+.r-1kb76zh{margin-right:8px;}
+.r-1aockid{width:40px;}
+.r-h7gdob{color:currentColor;}
+.r-1fi01yr{background-color:rgba(55,65,81,1.00);}
+.r-92ng3h{width:1px;}
+.r-1ro0kt6{-ms-flex-preferred-size:0%;-webkit-flex-basis:0%;flex-basis:0%;}
+.r-16y2uox{-ms-flex-positive:1;-webkit-box-flex:1;-webkit-flex-grow:1;flex-grow:1;}
+.r-1wbh5a2{-ms-flex-negative:1;-webkit-flex-shrink:1;flex-shrink:1;}
+.r-1habvwh{-ms-flex-align:start;-webkit-align-items:flex-start;-webkit-box-align:start;align-items:flex-start;}
+.r-puj83k{padding-left:24px;}
+.r-1pyaxff{padding-right:8px;}
+.r-mabqd8{height:32px;}
+.r-1jkjb{margin-left:8px;}
+.r-gg6oyi{font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;}
+.r-1b43r93{font-size:14px;}
+.r-16dba41{font-weight:400;}
+.r-hbpseb{line-height:22px;}
+.r-homxoj{color:inherit;}
+.r-1yvhtrz{width:32px;}
+.r-1vckr1u{background-color:rgba(245,247,249,1.00);}
+.r-g8m1yf{border-right-color:rgba(211,220,228,1.00);}
+.r-13l2t4g{border-right-width:1px;}
+.r-17s6mgv{-ms-flex-pack:end;-webkit-box-pack:end;-webkit-justify-content:flex-end;justify-content:flex-end;}
+.r-1ipicw7{width:300px;}
+.r-eqz5dr{-ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;}
+.r-14lw9ot{background-color:rgba(255,255,255,1.00);}
+.r-1d9grui{border-bottom-color:rgba(211,220,228,1.00);}
+.r-4dj0k7{box-shadow:0px 1px 2px rgba(0,0,0,0.12);}
+.r-sga3zk{height:64px;}
+.r-1bnj018{color:rgba(92,105,117,1.00);}
+.r-1kihuf0{-ms-flex-item-align:center;-ms-grid-row-align:center;-webkit-align-self:center;align-self:center;}
+.r-150rngu{-webkit-overflow-scrolling:touch;}
+.r-11yh6sk{overflow-x:hidden;}
+.r-1rnoaur{overflow-y:auto;}
+.r-1sncvnh{-webkit-transform:translateZ(0px);transform:translateZ(0px);}
+.r-11q2w3b{padding-bottom:78px;}
+.r-1p0dtai{bottom:0px;}
+.r-u8s1d{position:absolute;}
+.r-13qz1uu{width:100%;}
+.r-1b00too{background-color:rgba(236,239,241,1.00);}
+.r-116b19x{padding-left:40px;}
+.r-1wzrnnt{margin-top:16px;}
+.r-1rasi3h{color:rgba(136,153,168,1.00);}
+.r-1m04atk{padding-left:8px;}
+.r-b88u0q{font-weight:700;}
+.r-6wscbn{max-width:252px;}
+.r-1h0z5md{-ms-flex-pack:start;-webkit-box-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;}
+.r-88pszg{margin-right:16px;}
+.r-1mlwlqe{-ms-flex-preferred-size:auto;-webkit-flex-basis:auto;flex-basis:auto;}
+.r-417010{z-index:0;}
+.r-1niwhzg{background-color:rgba(0,0,0,0.00);}
+.r-vvn4in{background-position:center;}
+.r-u6sd8q{background-repeat:no-repeat;}
+.r-4gszlv{background-size:cover;}
+.r-1pi2tsx{height:100%;}
+.r-1d2f490{left:0px;}
+.r-zchlnj{right:0px;}
+.r-ipm5af{top:0px;}
+.r-1wyyakw{z-index:-1;}
+.r-ehq7j7{background-size:contain;}
+.r-15ysp7h{min-height:32px;}
+.r-bnwqim{position:relative;}
+.r-1enofrn{font-size:12px;}
+.r-majxgm{font-weight:500;}
+.r-19r33im{letter-spacing:1.2px;}
+.r-14yzgew{line-height:18px;}
+.r-tsynxw{text-transform:uppercase;}
+.r-1ow6zhx{margin-left:16px;}
+.r-11wrixw{margin-left:0px;}
+.r-1ghhsy9{color:rgba(52,109,219,1.00);}
+.r-1472mwg{height:24px;}
+.r-lrsllp{width:24px;}
+.r-11vxtcu{background-color:rgba(211,220,228,1.00);}
+.r-12zb1j4{margin-right:7px;}
+.r-8jnfel{min-height:-webkit-min-content;min-height:-moz-min-content;min-height:min-content;}
+.r-1ygmrgt{padding-top:24px;}
+.r-1ifxtd0{margin-bottom:16px;}
+.r-1nf4jbm{color:rgba(59,69,78,1.00);}
+.r-1xnzce8{-moz-user-select:-webkit-text;-moz-user-select:text;-ms-user-select:-webkit-text;-ms-user-select:text;-webkit-user-select:-webkit-text;-webkit-user-select:text;user-select:-webkit-text;user-select:text;}
+.r-ubezar{font-size:16px;}
+.r-135wba7{line-height:24px;}
+.r-nzcix3{border-bottom-color:rgba(227,232,237,1.00);}
+.r-11c0sde{margin-top:24px;}
+.r-obd0qt{-ms-flex-align:end;-webkit-align-items:flex-end;-webkit-box-align:end;align-items:flex-end;}
+.r-1yv4afn{border-top-color:rgba(227,232,237,1.00);}
+.r-5kkj8d{border-top-width:1px;}
+.r-1wtj0ep{-ms-flex-pack:justify;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;}
+.r-k200y{-ms-flex-item-align:start;-webkit-align-self:flex-start;align-self:flex-start;}
+.r-icyqz7{max-height:calc(100vh - 88px);}
+.r-gtdqiz{position:-webkit-sticky;position:sticky;}
+.r-eqo98v{top:24px;}
+.r-1mkpi1y{max-width:max(50%, 300px);}
+.r-dvzwsg{border-left-color:rgba(211,220,228,1.00);}
+.r-1ljd8xs{border-left-width:1px;}
+.r-hu79xy{min-width:196px;}
+.r-1peese0{margin-bottom:24px;}
+.r-xd6kpl{padding-bottom:8px;}
+.r-tskmnb{padding-top:8px;}
+.r-wk8lta{padding-top:0px;}
+.r-1mdbw0j{padding-bottom:0px;}
+.r-dnmrzs{max-width:100%;}
+.r-7xmw5f{width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;}
+.r-146iojx{max-width:300px;}
+.r-5oul0u{margin-bottom:8px;}
+.r-855088{border-left-color:rgba(0,0,0,0.00);}
+.r-dwliz8{border-left-width:2px;}
+.r-lqms97{margin-left:-1px;}
+.r-iphfwy{padding-bottom:4px;}
+.r-1h8ys4a{padding-top:4px;}
+.r-1dqbpge{cursor:-webkit-text;cursor:text;}
+.r-1sdbnja{top:-40px;}
+.r-1oszu61{-ms-flex-align:stretch;-webkit-align-items:stretch;-webkit-box-align:stretch;align-items:stretch;}
+.r-deolkf{box-sizing:border-box;}
+.r-1q142lx{-ms-flex-negative:0;-webkit-flex-shrink:0;flex-shrink:0;}
+.r-ifefl9{min-height:0px;}
+.r-bcqeeo{min-width:0px;}
+.r-fdjqy7{text-align:left;}
+.r-95jzfe{padding-top:16px;}
+.r-1l7z4oj{padding-bottom:16px;}
+.r-lltvgl{overflow-x:auto;}
+.r-buy8e9{overflow-y:hidden;}
+.r-1aerykh{border-top-color:rgba(211,220,228,1.00);}
+.r-uibjmv{font-family:gitbook-code-font, Menlo, monospace;}
+.r-m2pi6t{padding-left:4px;}
+.r-1hvjb8t{padding-right:4px;}
+.r-1xcajam{position:fixed;}
+.r-1ff274t{text-align:right;}
+.r-1v6e3re{min-width:48px;}
+.r-yrgyi6{white-space:pre;}
+.r-s5r7i3{top:4px;}
+.r-q4m81j{text-align:center;}
+.r-1vzi8xi{vertical-align:middle;}
+.r-1ua3vzd{background-color:rgba(223,255,240,1.00);}
+.r-1kf75xu{color:rgba(12,105,61,1.00);}
+.r-dyg9za{color:rgba(91,91,91,1.00);}
+.r-qtrn9a{color:rgba(221,17,85,1.00);}
+.r-11faab8{color:rgba(204,51,0,1.00);}
+.r-1p5i0ed{bottom:-24px;}
+.r-a5pmau{margin-right:2px;}
+[stylesheet-group="10"]{}
+[data-rnw-media-class="1569__1570"]{ height:80px;}
+@media (max-width: 700px) and (max-width: 9999999.49535457959549535548px) { [data-rnw-media-class="1569__1570"] { height:64px;} }
+[data-rnw-media-class="visible__hidden"]{display: none;}
+@media (max-width: 700px) and (max-width: 9999999.118105115105981081019595104105100100101110px) { [data-rnw-media-class="visible__hidden"] {display: flex;} }
+[data-rnw-media-class="hidden__visible"]{display: flex;}
+@media (max-width: 700px) and (max-width: 9999999.104105100100101110959511810511510598108101px) { [data-rnw-media-class="hidden__visible"] {display: none;} }
+[data-rnw-media-class="_visible_hidden"]{display: none;}
+@media (max-width: 1024px) and (max-width: 9999999.951181051151059810810195104105100100101110px) { [data-rnw-media-class="_visible_hidden"] {display: flex;} }
+[data-rnw-media-class="_hidden_1568"]{ padding-left:64px;padding-right:64px;}
+@media (max-width: 1024px) and (max-width: 9999999.951041051001001011109549535456px) { [data-rnw-media-class="_hidden_1568"] {display: none;} }
+[data-rnw-media-class="1567__1kbfcbz"]{ width:max(220px, calc(100vw - max(300px, calc((100vw - 910px) / 2 - 0px)) - 750px - 80px - 80px - 0px));}
+@media (max-width: 700px) and (max-width: 9999999.49535455959549107981029998122px) { [data-rnw-media-class="1567__1kbfcbz"] { width:auto;} }
+[data-rnw-media-class="188__187"]{ -ms-flex-direction:row;-webkit-box-direction:normal;-webkit-box-orient:horizontal;-webkit-flex-direction:row;flex-direction:row;}
+@media (max-width: 700px) and (max-width: 9999999.4956569595495655px) { [data-rnw-media-class="188__187"] { -ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;} }
+[data-rnw-media-class="hidden__visible_b1430-visible"]{display: flex;}
+@media (max-width: 1430px) and (max-width: 9999999.1041051001001011109595118105115105981081019598495251484511810511510598108101px) { [data-rnw-media-class="hidden__visible_b1430-visible"] {display: flex;} }
+@media (max-width: 700px) and (max-width: 9999999.1041051001001011109595118105115105981081019598495251484511810511510598108101px) { [data-rnw-media-class="hidden__visible_b1430-visible"] {display: none;} }
+[data-rnw-media-class="1567-95-196-__7mwae0-123-197"]{ -ms-flex-pack:end;-webkit-box-pack:end;-webkit-justify-content:flex-end;justify-content:flex-end;padding-left:24px;padding-right:24px;width:max(300px, calc((100vw - 910px) / 2 - 0px));}
+@media (max-width: 700px) and (max-width: 9999999.49535455455753454957544595955510911997101484549505145495755px) { [data-rnw-media-class="1567-95-196-__7mwae0-123-197"] { -ms-flex-pack:start;-webkit-box-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;padding-left:0px;padding-right:0px;width:auto;} }
+[data-rnw-media-class="233__233"]{ font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;line-height:24px;}
+@media (max-width: 700px) and (max-width: 9999999.5051519595505151px) { [data-rnw-media-class="233__233"] { font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;line-height:24px;} }
+[data-rnw-media-class="1579__1580"]{ border-right-width:0px;}
+@media (max-width: 700px) and (max-width: 9999999.49535557959549535648px) { [data-rnw-media-class="1579__1580"] { border-right-width:1px;} }
+@media (max-width: 1430px) and (max-width: 9999999.495753959595984952514845495753px) { [data-rnw-media-class="195___b1430-195"] { -ms-flex-pack:center;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;} }
+@media (max-width: 700px) and (max-width: 9999999.495753959595984952514845495753px) { [data-rnw-media-class="195___b1430-195"] { -ms-flex-pack:center;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;} }
+[data-rnw-media-class="1547-1553--__1547-1551--"]{ margin-right:80px;max-width:910px;}
+@media (max-width: 700px) and (max-width: 9999999.495352554549535351454595954953525545495353494545px) { [data-rnw-media-class="1547-1553--__1547-1551--"] { margin-right:16px;max-width:910px;} }
+[data-rnw-media-class="1526__1527"]{ height:56px;width:80px;}
+@media (max-width: 700px) and (max-width: 9999999.49535054959549535055px) { [data-rnw-media-class="1526__1527"] { height:36px;min-width:16px;width:auto;} }
+[data-rnw-media-class="232__230"]{ font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:48px;font-weight:700;line-height:56px;}
+@media (max-width: 700px) and (max-width: 9999999.5051509595505148px) { [data-rnw-media-class="232__230"] { font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;line-height:36px;} }
+[data-rnw-media-class="visible__hidden_b1430-visible"]{display: none;}
+@media (max-width: 1430px) and (max-width: 9999999.1181051151059810810195951041051001001011109598495251484511810511510598108101px) { [data-rnw-media-class="visible__hidden_b1430-visible"] {display: flex;} }
+@media (max-width: 700px) and (max-width: 9999999.1181051151059810810195951041051001001011109598495251484511810511510598108101px) { [data-rnw-media-class="visible__hidden_b1430-visible"] {display: flex;} }
+[data-rnw-media-class="1529__1528"]{ margin-left:80px;}
+@media (max-width: 700px) and (max-width: 9999999.49535057959549535056px) { [data-rnw-media-class="1529__1528"] { margin-left:16px;} }
+[data-rnw-media-class="1552__1550-127"]{ margin-left:80px;padding-bottom:40px;}
+@media (max-width: 700px) and (max-width: 9999999.4953535095954953534845495055px) { [data-rnw-media-class="1552__1550-127"] { margin-left:16px;} }
+[data-rnw-media-class="__187_b910-188"]{ -ms-flex-direction:row;-webkit-box-direction:normal;-webkit-box-orient:horizontal;-webkit-flex-direction:row;flex-direction:row;}
+@media (max-width: 910px) and (max-width: 9999999.9595495655959857494845495656px) { [data-rnw-media-class="__187_b910-188"] { -ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;} }
+[data-rnw-media-class="__153_b910-140-155"]{ margin-right:8px;}
+@media (max-width: 910px) and (max-width: 9999999.959549535195985749484549524845495353px) { [data-rnw-media-class="__153_b910-140-155"] { margin-bottom:8px;margin-right:0px;} }
+[data-rnw-media-class="__154_b910-139-156"]{ margin-left:8px;}
+@media (max-width: 910px) and (max-width: 9999999.959549535295985749484549515745495354px) { [data-rnw-media-class="__154_b910-139-156"] { margin-left:0px;margin-top:8px;} }
+[data-rnw-media-class="_188_187"]{ -ms-flex-direction:row;-webkit-box-direction:normal;-webkit-box-orient:horizontal;-webkit-flex-direction:row;flex-direction:row;}
+@media (max-width: 1024px) and (max-width: 9999999.9549565695495655px) { [data-rnw-media-class="_188_187"] { -ms-flex-direction:column;-webkit-box-direction:normal;-webkit-box-orient:vertical;-webkit-flex-direction:column;flex-direction:column;} }
+@media (max-width: 1024px) and (max-width: 9999999.9549545095px) { [data-rnw-media-class="_162_"] { margin-bottom:16px;} }
+[data-rnw-media-class="_visible_visible"]{display: flex;}
+@media (max-width: 1024px) and (max-width: 9999999.95118105115105981081019511810511510598108101px) { [data-rnw-media-class="_visible_visible"] {display: flex;} }
+[data-rnw-media-class="hidden__1kbfcbz_b1430-hidden"]{ width:max(220px, calc(100vw - max(300px, calc((100vw - 910px) / 2 - 0px)) - 750px - 80px - 80px - 0px));}
+@media (max-width: 1430px) and (max-width: 9999999.10410510010010111095954910798102999812295984952514845104105100100101110px) { [data-rnw-media-class="hidden__1kbfcbz_b1430-hidden"] {display: none;} }
+@media (max-width: 700px) and (max-width: 9999999.10410510010010111095954910798102999812295984952514845104105100100101110px) { [data-rnw-media-class="hidden__1kbfcbz_b1430-hidden"] {display: none;} }
+[data-rnw-media-class="210__209"]{ font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:32px;font-weight:700;line-height:40px;}
+@media (max-width: 700px) and (max-width: 9999999.5049489595504857px) { [data-rnw-media-class="210__209"] { font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;line-height:36px;} }
+[data-rnw-media-class="213__211"]{ font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;line-height:24px;}
+@media (max-width: 700px) and (max-width: 9999999.5049519595504949px) { [data-rnw-media-class="213__211"] { font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:24px;} }
+[data-rnw-media-class="211__210"]{ font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:24px;font-weight:700;line-height:36px;}
+@media (max-width: 700px) and (max-width: 9999999.5049499595504948px) { [data-rnw-media-class="211__210"] { font-family:gitbook-content-font,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;line-height:24px;} }
+[stylesheet-group="20"]{}
+body:not(.dragging) [data-rnw-int-class="button___721_"]:hover , body:not(.dragging) [data-rnw-int-class="button___721_"]:focus { background-color:rgba(43,46,57,1.00);}
+body:not(.dragging) [data-rnw-int-class="button___721_"]:hover [data-rnw-int-class="nearest___723_"], body:not(.dragging) [data-rnw-int-class="button___721_"]:focus [data-rnw-int-class="nearest___723_"]{ color:rgba(204,207,212,1.00);}
+body:not(.dragging) [data-rnw-int-class="button___589_"]:hover [data-rnw-int-class="nearest___591-27928_"], body:not(.dragging) [data-rnw-int-class="button___589_"]:focus [data-rnw-int-class="nearest___591-27928_"]{ color:rgba(52,109,219,1.00);}
+body:not(.dragging) [data-rnw-int-class="button___589_"]:hover [data-rnw-int-class="nearest___590-27926_"], body:not(.dragging) [data-rnw-int-class="button___589_"]:focus [data-rnw-int-class="nearest___590-27926_"]{ color:rgba(52,109,219,1.00);}
+body:not(.dragging) [data-rnw-int-class="nearest____"]:hover [data-rnw-int-class="nearest___265-27932_"], body:not(.dragging) [data-rnw-int-class="nearest____"]:focus [data-rnw-int-class="nearest___265-27932_"]{ color:rgba(52,109,219,1.00);}
+[data-rnw-int-class="nearest_250__266-27924_"]{ color:rgba(234,242,247,1.00);}
+body:not(.dragging) [data-rnw-int-class="nearest____"]:hover [data-rnw-int-class="nearest_250__266-27924_"], body:not(.dragging) [data-rnw-int-class="nearest____"]:focus [data-rnw-int-class="nearest_250__266-27924_"]{ color:rgba(145,176,240,1.00);}
+body:not(.dragging) [data-rnw-int-class="nearest__1581__"]:hover { background-color:rgba(236,239,241,1.00);}
+body:not(.dragging) [data-rnw-int-class="button___720_"]:hover , body:not(.dragging) [data-rnw-int-class="button___720_"]:focus { background-color:rgba(245,247,249,1.00);}
+body:not(.dragging) [data-rnw-int-class="button___720_"]:hover [data-rnw-int-class="nearest___722_"], body:not(.dragging) [data-rnw-int-class="button___720_"]:focus [data-rnw-int-class="nearest___722_"]{ color:rgba(92,105,117,1.00);}
+body:not(.dragging) [data-rnw-int-class="nearest___876-27936_"]:hover , body:not(.dragging) [data-rnw-int-class="nearest___876-27936_"]:focus { border-bottom-color:rgba(52,109,219,1.00);border-left-color:rgba(52,109,219,1.00);border-right-color:rgba(52,109,219,1.00);border-top-color:rgba(52,109,219,1.00);}
+body:not(.dragging) [data-rnw-int-class="nearest___876-27936_"]:hover [data-rnw-int-class="nearest__265-27922__"]{ color:rgba(52,109,219,1.00);}
+body:not(.dragging) [data-rnw-int-class="nearest___876-27936_"]:hover [data-rnw-int-class="nearest___265-27922_"], body:not(.dragging) [data-rnw-int-class="nearest___876-27936_"]:focus [data-rnw-int-class="nearest___265-27922_"]{ color:rgba(52,109,219,1.00);}
+body:not(.dragging) [data-rnw-int-class="nearest____"]:hover [data-rnw-int-class="nearest___265-27922_"], body:not(.dragging) [data-rnw-int-class="nearest____"]:focus [data-rnw-int-class="nearest___265-27922_"]{ color:rgba(52,109,219,1.00);}
+[data-rnw-int-class="nearest_265-27922_267-27923-243__"]{ color:rgba(52,109,219,1.00);}
+body:not(.dragging) [data-rnw-int-class="link____"]:hover [data-rnw-int-class="nearest_265-27922_267-27923-243__"]{ -webkit-text-decoration-line:underline;color:rgba(0,73,215,1.00);text-decoration-line:underline;}</style>
+	<script type="text/javascript" defer="" src="https://cdn.iframe.ly/embed.js" async=""></script>
+	<script type="text/javascript" defer="" src="https://cdn.polyfill.io/v2/polyfill.js?features=Intl.~locale.en" crossorigin="anonymous"></script>
+<style id="iframely-styles" type="text/css">.iframely-responsive{top:0;left:0;width:100%;height:0;position:relative;padding-bottom:56.25%;box-sizing:border-box;}.iframely-responsive>*{top:0;left:0;width:100%;height:100%;position:absolute;border:0;box-sizing:border-box;}</style></head>
+<body>
+	<div class="gitbook-root"><div class="css-1dbjc4n r-13awgt0 r-12vffkv" data-reactroot=""><div class="css-1dbjc4n r-13awgt0 r-12vffkv"><div data-rnw-media-class="1701__1702" class="css-1dbjc4n r-1awozwy r-2jelyo r-1y14msn r-qklmqi r-111w7nw r-1quu1zo r-18u37iz r-184en5c"><a href="/" data-rnw-int-class="nearest____" data-rnw-media-class="1699-95-196-__7mwae0-123-197" class="css-4rbku5 css-1dbjc4n r-1awozwy r-1loqt21 r-18u37iz r-1otgn73 r-1i6wzkk r-lrvibr" data-testid="public.headerHomeLink" style="transition-duration: 0s;"><div class="css-1dbjc4n r-1awozwy r-1ro0kt6 r-18u37iz r-16y2uox r-1wbh5a2 r-1h0z5md r-6wscbn"><div class="css-1dbjc4n"><div data-rnw-media-class="hidden__visible" class="css-1dbjc4n"><div class="css-1dbjc4n r-1awozwy r-z2wwpe r-18u37iz r-eu3ka r-1777fci r-88pszg r-1udh08x r-1aockid" style=""><div class="css-1dbjc4n r-1ro0kt6 r-16y2uox r-1wbh5a2 r-1pi2tsx r-1udh08x r-13qz1uu r-417010" style=""><div class="css-1dbjc4n r-1niwhzg r-vvn4in r-u6sd8q r-ehq7j7 r-1p0dtai r-1pi2tsx r-1d2f490 r-u8s1d r-zchlnj r-ipm5af r-13qz1uu r-1wyyakw" style="background-image: url(&quot;https://www.gitbook.com/cdn-cgi/image/width=40,height=40,fit=contain,dpr=0.75,format=auto/https%3A%2F%2F1690203644-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FKX9pG8rH3DbKDOvV7di7%252Ficon%252F1nKfBhLbPxd2KuXchHET%252F0x%2520logo.png%3Falt%3Dmedia%26token%3D25a85a3e-7f72-47ea-a8b2-e28c0d24074b&quot;);"></div><img alt="" draggable="false" src="https://www.gitbook.com/cdn-cgi/image/width=40,height=40,fit=contain,dpr=0.75,format=auto/https%3A%2F%2F1690203644-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FKX9pG8rH3DbKDOvV7di7%252Ficon%252F1nKfBhLbPxd2KuXchHET%252F0x%2520logo.png%3Falt%3Dmedia%26token%3D25a85a3e-7f72-47ea-a8b2-e28c0d24074b" class="css-9pa8cd"></div></div></div></div><div dir="auto" data-rnw-media-class="233__233" class="css-901oao"><span aria-label="0x Documentation" data-rnw-int-class="nearest_250__266-1750_" class="css-901oao css-16my406 css-cens5h" style="-webkit-line-clamp: 2;">0x Documentation</span></div></div></a><div data-rnw-media-class="hidden__visible" class="css-1dbjc4n r-1fi01yr r-eu3ka r-lqms97 r-92ng3h" style=""></div><div data-rnw-media-class="_hidden_1700" class="css-1dbjc4n r-1awozwy r-1ro0kt6 r-18u37iz r-16y2uox r-1wbh5a2"></div><div data-rnw-media-class="hidden__visible" class="css-1dbjc4n r-1fi01yr r-eu3ka r-92ng3h" style="margin-right: -1px;"></div><div data-rnw-media-class="1699__1kbfcbz" class="css-1dbjc4n"></div></div><div data-rnw-media-class="188__187" class="css-1dbjc4n r-1ro0kt6 r-16y2uox r-1wbh5a2"><div data-rnw-media-class="hidden__visible_b1430-visible" class="css-1dbjc4n r-1vckr1u r-g8m1yf r-13l2t4g r-18u37iz r-17s6mgv" data-testid="page.desktopTableOfContents" style="width: max(300px, ((100vw - 910px) / 2) - 0px);"><div class="css-1dbjc4n r-eqz5dr r-1ipicw7"><div class="css-1dbjc4n r-1ro0kt6 r-16y2uox r-1wbh5a2 r-puj83k"><div class="css-1dbjc4n r-150rngu r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-11yh6sk r-1rnoaur r-1sncvnh"><div class="css-1dbjc4n r-11q2w3b r-1yzf0co"><div class="css-1dbjc4n r-1r5su4o"><div class="css-1dbjc4n r-11wrixw r-bnwqim"><div class="css-1dbjc4n"><a href="/0x-api-swap/introduction" data-rnw-media-class="1711__1712" data-rnw-int-class="nearest__1713__" class="css-4rbku5 css-1dbjc4n r-1awozwy r-42olwf r-rs99b7 r-1loqt21 r-18u37iz r-15ysp7h r-ymttw5 r-1otgn73 r-1i6wzkk r-lrvibr" style="transition-duration: 0s;"></a></div><div class="css-1dbjc4n"><a href="/0x-api-swap/api-references" data-rnw-media-class="1711__1712" data-rnw-int-class="nearest__1713__" class="css-4rbku5 css-1dbjc4n r-1awozwy r-42olwf r-rs99b7 r-1loqt21 r-18u37iz r-15ysp7h r-ymttw5 r-1otgn73 r-1i6wzkk r-lrvibr" style="transition-duration: 0s;"><div dir="auto" class="css-901oao r-1bnj018 r-1ro0kt6 r-16y2uox r-1wbh5a2 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb r-5njf8e">API References</div><div class="css-1dbjc4n r-1awozwy r-18u37iz"><div data-rnw-int-class="button___321_" tabindex="0" class="css-1dbjc4n r-1awozwy r-42olwf r-z2wwpe r-rs99b7 r-1bnj018 r-1loqt21 r-18u37iz r-18kxxzh r-1472mwg r-1777fci r-1ny4l3l r-mk0yit r-1otgn73 r-1i6wzkk r-lrvibr r-lrsllp" style="transition-duration: 0s;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMid meet" data-rnw-int-class="nearest___322-1752_" class="r-h7gdob r-1vzi8xi" style="height: 14px; width: 14px;"><path d="M6 9l6 6 6-6"></path></svg></div></div></a><div class="css-1dbjc4n"><div class="css-1dbjc4n"><a href="./quote.html" data-rnw-media-class="1711__1712" data-rnw-int-class="nearest__1713__" class="css-4rbku5 css-1dbjc4n r-1awozwy r-42olwf r-rs99b7 r-1loqt21 r-18u37iz r-15ysp7h r-ymttw5 r-1otgn73 r-1i6wzkk r-lrvibr" style="transition-duration: 0s;"><div dir="auto" class="css-901oao r-1rasi3h r-1ro0kt6 r-16y2uox r-1wbh5a2 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb r-5njf8e">Quote</div></a></div>
+<div class="css-1dbjc4n"><a href="./price.html" data-rnw-media-class="1711__1712" data-rnw-int-class="nearest__1713__" class="css-4rbku5 css-1dbjc4n r-1awozwy r-42olwf r-rs99b7 r-1loqt21 r-18u37iz r-15ysp7h r-ymttw5 r-1otgn73 r-1i6wzkk r-lrvibr" style="transition-duration: 0s;"><div dir="auto" class="css-901oao r-1rasi3h r-1ro0kt6 r-16y2uox r-1wbh5a2 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb r-5njf8e">Price</div></a></div><div class="css-1dbjc4n"><a href="./sources.html" data-rnw-media-class="1711__1712" data-rnw-int-class="nearest__1713__" class="css-4rbku5 css-1dbjc4n r-1awozwy r-42olwf r-rs99b7 r-1loqt21 r-18u37iz r-15ysp7h r-ymttw5 r-1otgn73 r-1i6wzkk r-lrvibr" style="transition-duration: 0s;"><div dir="auto" class="css-901oao r-1rasi3h r-1ro0kt6 r-16y2uox r-1wbh5a2 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb r-5njf8e">Sources</div></a></div><div class="css-1dbjc4n r-11vxtcu r-1p0dtai r-1d2f490 r-u8s1d r-ipm5af r-92ng3h"></div></div></div><div class="css-1dbjc4n"></div></div></div></div></div></div><div class="css-1dbjc4n r-1p0dtai r-u8s1d r-13qz1uu r-184en5c"><div class="css-1dbjc4n r-mk0yit"></div></div></div></div><div class="css-1dbjc4n r-14lw9ot r-13awgt0"><div class="css-1dbjc4n r-150rngu r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-11yh6sk r-1rnoaur r-1sncvnh"><div class="css-1dbjc4n r-1ro0kt6 r-16y2uox r-1wbh5a2 r-8jnfel"><div class="css-1dbjc4n r-1ro0kt6 r-18u37iz r-16y2uox r-1wbh5a2"><div data-rnw-media-class="195___b1430-195" class="css-1dbjc4n r-1ro0kt6 r-18u37iz r-16y2uox r-1wbh5a2 r-1777fci"><div data-rnw-media-class="1513-1519--__1513-1517--" class="css-1dbjc4n r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2"><div class="css-1dbjc4n r-eqz5dr r-1ifxtd0 r-1ygmrgt"><div class="css-1dbjc4n r-18u37iz"><div data-rnw-media-class="1492__1493" class="css-1dbjc4n r-1awozwy r-18u37iz r-17s6mgv"></div><div class="css-1dbjc4n r-1ro0kt6 r-16y2uox r-1wbh5a2"><div dir="auto" data-rnw-media-class="232__230" class="css-901oao r-1nf4jbm r-1xnzce8" data-testid="page.title">Sources</div></div></div><div data-rnw-media-class="1495__1494" class="css-1dbjc4n r-nzcix3 r-qklmqi r-11c0sde"></div></div><div data-rnw-media-class="1518__1516-127" class="css-1dbjc4n"><div class="css-1dbjc4n r-bnwqim"><div tabindex="0" class="css-1dbjc4n r-1dqbpge r-eu3ka r-1d2f490 r-u8s1d r-zchlnj r-1sdbnja"></div><div data-testid="page.contentEditor" data-slate-editor="true" data-key="03b58a4a9a4547b4a46bea1d13dcd3e0" autocorrect="on" spellcheck="true" data-gramm="false" style="outline: none; white-space: pre-wrap; overflow-wrap: break-word;"><div style="content-visibility: auto; contain-intrinsic-size: 0px 40px;"><div data-key="1a6851a7a8bb4a9e9bdc93044f0b0901" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-tskmnb r-1yzf0co r-bnwqim r-417010"><div data-block-content="1a6851a7a8bb4a9e9bdc93044f0b0901" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><div dir="auto" class="css-901oao r-1nf4jbm r-gg6oyi r-ubezar r-16dba41 r-135wba7 r-fdjqy7 r-1xnzce8"><span data-key="48786dcca2634b9c856350cff3227a95"><span data-offset-key="48786dcca2634b9c856350cff3227a95:0">Returns the liquidity sources enabled for the chain.</span></span></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 72px;"><div class="css-1dbjc4n r-1aerykh r-5kkj8d r-11c0sde r-95jzfe"><div data-key="497923925b324d1984f38a6865ad1e94" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-1ygmrgt r-1yzf0co r-bnwqim r-417010"><div data-block-content="497923925b324d1984f38a6865ad1e94" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><h1 data-rnw-media-class="__" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010" id="request"><div dir="auto" data-rnw-media-class="210__209" class="css-901oao r-1nf4jbm r-1loqt21 r-fdjqy7 r-1xnzce8"><span data-key="7a94157218024b1699ef2862e8934c48"><span data-offset-key="7a94157218024b1699ef2862e8934c48:0">Request</span></span></div></h1></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 40px;"><div data-key="f963ccbe2b3c49d1b884d328ba236517" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-tskmnb r-1yzf0co r-bnwqim r-417010"><div data-block-content="f963ccbe2b3c49d1b884d328ba236517" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><div dir="auto" class="css-901oao r-1nf4jbm r-gg6oyi r-ubezar r-16dba41 r-135wba7 r-fdjqy7 r-1xnzce8"><span data-key="4f3ed4ac6a2d4cdda4962ce7d2d5f09f"><span data-offset-key="4f3ed4ac6a2d4cdda4962ce7d2d5f09f:0">No request parameters.</span></span></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 72px;"><div class="css-1dbjc4n r-1aerykh r-5kkj8d r-11c0sde r-95jzfe"><div data-key="21268ad99aa44ce2aba8389044fbcdcc" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-1ygmrgt r-1yzf0co r-bnwqim r-417010"><div data-block-content="21268ad99aa44ce2aba8389044fbcdcc" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><h1 data-rnw-media-class="__" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010" id="response"><div dir="auto" data-rnw-media-class="210__209" class="css-901oao r-1nf4jbm r-1loqt21 r-fdjqy7 r-1xnzce8"><span data-key="7288f8d30e4047969ecbd94b5e5639cc"><span data-offset-key="7288f8d30e4047969ecbd94b5e5639cc:0">Response</span></span></div></h1></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 40px;"><div data-key="3834344dc3c54a189be67fed57c52c7c" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-tskmnb r-1yzf0co r-bnwqim r-417010"><div data-block-content="3834344dc3c54a189be67fed57c52c7c" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><div dir="auto" class="css-901oao r-1nf4jbm r-gg6oyi r-ubezar r-16dba41 r-135wba7 r-fdjqy7 r-1xnzce8"><span data-key="8e6121f8eeb6491994f5687074daa612"><span data-offset-key="8e6121f8eeb6491994f5687074daa612:0">An array of liquidity sources.</span></span></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 72px;"><div class="css-1dbjc4n r-1aerykh r-5kkj8d r-11c0sde r-95jzfe"><div data-key="ff8b6cc6fa2845d2bf56acdb036dde68" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-1ygmrgt r-1yzf0co r-bnwqim r-417010"><div data-block-content="ff8b6cc6fa2845d2bf56acdb036dde68" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><h1 data-rnw-media-class="__" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010" id="example"><div dir="auto" data-rnw-media-class="210__209" class="css-901oao r-1nf4jbm r-1loqt21 r-fdjqy7 r-1xnzce8"><span data-key="f9eeaf682a834f7f825d4838ac555dbf"><span data-offset-key="f9eeaf682a834f7f825d4838ac555dbf:0">Example</span></span></div></h1></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 68px;"><div data-key="f6ff14093ad94cb4ad01bc7cd7ade7d9" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-1ygmrgt r-1yzf0co r-bnwqim r-417010"><div data-block-content="f6ff14093ad94cb4ad01bc7cd7ade7d9" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><h2 data-rnw-media-class="__" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010" id="get-a-list-of-liquidity-sources-on-fantom"><div dir="auto" data-rnw-media-class="211__210" class="css-901oao r-1nf4jbm r-1loqt21 r-fdjqy7 r-1xnzce8"><span data-key="54f8849a231c48c38fc96f9eb4c4b857"><span data-offset-key="54f8849a231c48c38fc96f9eb4c4b857:0">Get a list of liquidity sources on Fantom</span></span></div></h2></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 40px;"><div data-key="63fea7910bb44c53bc9d1c0eff9059d8" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-tskmnb r-1yzf0co r-bnwqim r-417010"><div data-block-content="63fea7910bb44c53bc9d1c0eff9059d8" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><div dir="auto" class="css-901oao r-1nf4jbm r-gg6oyi r-ubezar r-16dba41 r-135wba7 r-fdjqy7 r-1xnzce8"><span data-key="4a9dc968c12f4cbfa43cbae1de7e46cc"><strong data-slate-leaf="true" data-offset-key="4a9dc968c12f4cbfa43cbae1de7e46cc:0" class="r-b88u0q">Request</strong></span></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 54px;"><div data-key="e7e6072bf6684d9a86bf833f57305677" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1l7z4oj r-95jzfe r-1yzf0co r-bnwqim r-417010"><div data-block-content="e7e6072bf6684d9a86bf833f57305677" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><div class="css-1dbjc4n r-1vckr1u r-z2wwpe r-tskmnb r-bnwqim"><div spellcheck="false" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-1jwulwa r-t60dpp r-xd6kpl r-bnwqim r-417010"><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">1</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="a20e584f77034720a1567478e743cbb1"><span data-offset-key="a20e584f77034720a1567478e743cbb1:0">https://fantom.api.0x.org/swap/v1/sources</span></span></div></div></div><div contenteditable="false" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-mabqd8 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-u8s1d r-zchlnj r-s5r7i3 r-1yvhtrz r-417010"><div aria-label="Copy" data-rnw-int-class="button___321_" tabindex="0" class="css-1dbjc4n r-1awozwy r-42olwf r-z2wwpe r-rs99b7 r-1bnj018 r-1loqt21 r-18u37iz r-18kxxzh r-mabqd8 r-1777fci r-1ny4l3l r-mk0yit r-1otgn73 r-1i6wzkk r-lrvibr r-1yvhtrz" style="transition-duration: 0s;"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" data-rnw-int-class="nearest___322-1752_" class="r-h7gdob r-1vzi8xi" style="height: 14px; width: 14px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 .5A.5.5 0 01.5 0h10a.5.5 0 01.5.5V4h-1V1H1v9h3v1H.5a.5.5 0 01-.5-.5V.5z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M5 5.5a.5.5 0 01.5-.5h10a.5.5 0 01.5.5v10a.5.5 0 01-.5.5h-10a.5.5 0 01-.5-.5v-10zM6 6v9h9V6H6z" fill="currentColor"></path></svg></div><div class="css-1dbjc4n r-1awozwy r-1ua3vzd r-m9k8lk r-18c69zk r-rs99b7 r-6koalj r-18u37iz r-1777fci r-u8s1d r-q4m81j r-1vzi8xi r-s5r7i3 r-7xmw5f" id="animatedComponent" style="height: 22px; left: -50px; min-width: 22px; opacity: 0; padding-right: 4px; padding-left: 4px;"><div class="css-1dbjc4n"><div dir="auto" class="css-901oao r-1kf75xu r-gg6oyi r-1enofrn r-16dba41 r-14yzgew">Copied!</div></div></div></div></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 40px;"><div data-key="e582abf980e741428522f42e1eacdba1" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-xd6kpl r-tskmnb r-1yzf0co r-bnwqim r-417010"><div data-block-content="e582abf980e741428522f42e1eacdba1" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><div dir="auto" class="css-901oao r-1nf4jbm r-gg6oyi r-ubezar r-16dba41 r-135wba7 r-fdjqy7 r-1xnzce8"><span data-key="e1682e6e63944440ac40f3d5b6b3a0b9"><strong data-slate-leaf="true" data-offset-key="e1682e6e63944440ac40f3d5b6b3a0b9:0" class="r-b88u0q">Response</strong></span></div></div></div></div><div style="content-visibility: auto; contain-intrinsic-size: 0px 340px;"><div data-key="ddf47adaa322444f97d4ad279428e55c" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1l7z4oj r-95jzfe r-1yzf0co r-bnwqim r-417010"><div data-block-content="ddf47adaa322444f97d4ad279428e55c" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1ro0kt6 r-eqz5dr r-16y2uox r-1wbh5a2 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-bnwqim r-417010"><div class="css-1dbjc4n r-1vckr1u r-z2wwpe r-tskmnb r-bnwqim"><div spellcheck="false" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-1jwulwa r-t60dpp r-xd6kpl r-bnwqim r-417010"><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">1</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="3ab1a93d8b76441288dca521fe9473dd"><span data-offset-key="3ab1a93d8b76441288dca521fe9473dd:0">{</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">2</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="ad367725ca1f4b78b19f2296e6cd5665"><strong data-slate-leaf="true" data-offset-key="ad367725ca1f4b78b19f2296e6cd5665:0" class="r-b88u0q">    </strong><span data-offset-key="ad367725ca1f4b78b19f2296e6cd5665:1">"records": [</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">3</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="3d7e148d0b2c4727bf2c16270025b391"><span data-offset-key="3d7e148d0b2c4727bf2c16270025b391:0">        "Beethovenx",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">4</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="7fbdc41bbdd04a4abede99acf1aa523e"><span data-offset-key="7fbdc41bbdd04a4abede99acf1aa523e:0">        "Curve",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">5</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="af7fb81e2bce4b09b8ac7c952f0af081"><span data-offset-key="af7fb81e2bce4b09b8ac7c952f0af081:0">        "Curve_V2",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">6</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="5bcfd2d1be964dad96ada859f8df2229"><span data-offset-key="5bcfd2d1be964dad96ada859f8df2229:0">        "JetSwap",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">7</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="64b2ff9134a046ef9de94d9b47dddbef"><span data-offset-key="64b2ff9134a046ef9de94d9b47dddbef:0">        "MorpheusSwap",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">8</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="39dc9122d3f649f6bd00e8e8d0541427"><span data-offset-key="39dc9122d3f649f6bd00e8e8d0541427:0">        "MultiHop",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">9</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="098fe4212f80488bb7f7ececdd94e508"><span data-offset-key="098fe4212f80488bb7f7ececdd94e508:0">        "SpiritSwap",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">10</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="d50e7d7ec053469bb75a2a39daa4c3f2"><span data-offset-key="d50e7d7ec053469bb75a2a39daa4c3f2:0">        "SpookySwap",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">11</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="fa71c2e17706483da778c962ca75ea8b"><span data-offset-key="fa71c2e17706483da778c962ca75ea8b:0">        "SushiSwap",</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">12</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="b23a79dc1c36452184f64d093ceb57f1"><span data-offset-key="b23a79dc1c36452184f64d093ceb57f1:0">        "Synapse"</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">13</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="d44010605dad4a93a40b18abe4022e98"><span data-offset-key="d44010605dad4a93a40b18abe4022e98:0">    ]</span></span></div></div><div class="css-1dbjc4n r-6koalj r-18u37iz"><div contenteditable="false" class="r-1oszu61 r-1vckr1u r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-18kxxzh r-1q142lx r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-1pyaxff r-1xcajam r-1aockid r-184en5c"><div dir="auto" class="css-901oao r-1rasi3h r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1ff274t">14</div></div><div dir="auto" class="css-901oao r-1nf4jbm r-uibjmv r-1b43r93 r-16dba41 r-hbpseb r-1v6e3re r-116b19x r-1xnzce8 r-yrgyi6"><span data-key="2284218257d94a4a95bd71f8d80a38ce"><span data-offset-key="2284218257d94a4a95bd71f8d80a38ce:0">}</span></span></div></div></div><div contenteditable="false" class="r-1oszu61 r-1xc7w19 r-1phboty r-1yadl64 r-deolkf r-6koalj r-1mlwlqe r-eqz5dr r-1q142lx r-mabqd8 r-crgep1 r-ifefl9 r-bcqeeo r-t60dpp r-u8s1d r-zchlnj r-s5r7i3 r-1yvhtrz r-417010"><div aria-label="Copy" data-rnw-int-class="button___321_" tabindex="0" class="css-1dbjc4n r-1awozwy r-42olwf r-z2wwpe r-rs99b7 r-1bnj018 r-1loqt21 r-18u37iz r-18kxxzh r-mabqd8 r-1777fci r-1ny4l3l r-mk0yit r-1otgn73 r-1i6wzkk r-lrvibr r-1yvhtrz" style="transition-duration: 0s;"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" data-rnw-int-class="nearest___322-1752_" class="r-h7gdob r-1vzi8xi" style="height: 14px; width: 14px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 .5A.5.5 0 01.5 0h10a.5.5 0 01.5.5V4h-1V1H1v9h3v1H.5a.5.5 0 01-.5-.5V.5z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M5 5.5a.5.5 0 01.5-.5h10a.5.5 0 01.5.5v10a.5.5 0 01-.5.5h-10a.5.5 0 01-.5-.5v-10zM6 6v9h9V6H6z" fill="currentColor"></path></svg></div><div class="css-1dbjc4n r-1awozwy r-1ua3vzd r-m9k8lk r-18c69zk r-rs99b7 r-6koalj r-18u37iz r-1777fci r-u8s1d r-q4m81j r-1vzi8xi r-s5r7i3 r-7xmw5f" id="animatedComponent" style="height: 22px; left: -50px; min-width: 22px; opacity: 0; padding-right: 4px; padding-left: 4px;"><div class="css-1dbjc4n"><div dir="auto" class="css-901oao r-1kf75xu r-gg6oyi r-1enofrn r-16dba41 r-14yzgew">Copied!</div></div></div></div></div></div></div></div></div></div></div></div></div><div data-rnw-media-class="hidden__1kbfcbz_b1430-hidden" class="css-1dbjc4n r-k200y r-pw2am6 r-icyqz7 r-1mkpi1y r-1rnoaur r-1h4fu65 r-gtdqiz r-eqo98v" data-testid="page.outline"><div class="css-1dbjc4n r-dvzwsg r-1ljd8xs r-1peese0 r-hu79xy"><div class="css-1dbjc4n r-1mdbw0j r-wk8lta"><div data-rnw-int-class="nearest____" tabindex="0" class="css-1dbjc4n r-1awozwy r-1loqt21 r-18u37iz r-dnmrzs r-1guathk r-oyd9sg r-1otgn73 r-1i6wzkk r-lrvibr r-7xmw5f" style="transition-duration: 0s;"><div class="css-1dbjc4n r-1kb76zh"><svg viewBox="0 0 16 16" fill="none" preserveAspectRatio="xMidYMid meet" data-rnw-int-class="nearest___265-1748_" class="r-1rasi3h r-1vzi8xi" style="height: 16px; width: 16px;"><path d="M14.11 6.6l-.16-.09c-.042.343-.13.68-.26 1A3 3 0 0115 10a3 3 0 01-3 3H8a3 3 0 010-6h.82A3 3 0 009 6H8a4 4 0 000 8h4a4 4 0 002.11-7.4z" fill="currentColor"></path><path d="M1.89 9.4l.16.09c.042-.343.13-.68.26-1A3 3 0 011 6a3 3 0 013-3h4a3 3 0 110 6h-.82A3 3 0 007 10h1a4 4 0 000-8H4a4 4 0 00-2.11 7.4z" fill="currentColor"></path></svg></div><div dir="auto" data-rnw-int-class="nearest___265-1748_" class="css-901oao css-vcwn7f r-1bnj018 r-1ro0kt6 r-16y2uox r-1wbh5a2 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb">Copy link</div></div></div></div><div class="css-1dbjc4n r-dvzwsg r-1ljd8xs r-146iojx"><div class="css-1dbjc4n r-1awozwy r-18u37iz r-5oul0u r-1guathk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMid meet" class="r-1rasi3h r-1vzi8xi" style="height: 16px; width: 16px;"><path d="M21 10H7M21 6H3M21 14H3M21 18H7"></path></svg><div dir="auto" class="css-901oao r-1rasi3h r-gg6oyi r-1enofrn r-b88u0q r-19r33im r-14yzgew r-1jkjb r-tsynxw">Contents</div></div><a href="/0x-api-swap/api-references/get-swap-v1-sources#request" data-rnw-int-class="nearest____" class="css-4rbku5 css-1dbjc4n r-855088 r-dwliz8 r-1loqt21 r-18u37iz r-lqms97 r-dnmrzs r-iphfwy r-1guathk r-1h8ys4a r-1otgn73 r-1i6wzkk r-lrvibr r-7xmw5f" style="transition-duration: 0s;"><div dir="auto" data-rnw-int-class="nearest___265-1748_" class="css-901oao css-vcwn7f r-1bnj018 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb">Request</div></a><a href="/0x-api-swap/api-references/get-swap-v1-sources#response" data-rnw-int-class="nearest____" class="css-4rbku5 css-1dbjc4n r-hqnlqz r-dwliz8 r-1loqt21 r-18u37iz r-lqms97 r-dnmrzs r-iphfwy r-1guathk r-1h8ys4a r-1otgn73 r-1i6wzkk r-lrvibr r-7xmw5f" style="transition-duration: 0s;"><div dir="auto" data-rnw-int-class="nearest___265-1748_" class="css-901oao css-vcwn7f r-1ghhsy9 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb">Response</div></a><a href="/0x-api-swap/api-references/get-swap-v1-sources#example" data-rnw-int-class="nearest____" class="css-4rbku5 css-1dbjc4n r-855088 r-dwliz8 r-1loqt21 r-18u37iz r-lqms97 r-dnmrzs r-iphfwy r-1guathk r-1h8ys4a r-1otgn73 r-1i6wzkk r-lrvibr r-7xmw5f" style="transition-duration: 0s;"><div dir="auto" data-rnw-int-class="nearest___265-1748_" class="css-901oao css-vcwn7f r-1bnj018 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb">Example</div></a><a href="/0x-api-swap/api-references/get-swap-v1-sources#get-a-list-of-liquidity-sources-on-fantom" data-rnw-int-class="nearest____" class="css-4rbku5 css-1dbjc4n r-855088 r-dwliz8 r-1loqt21 r-18u37iz r-lqms97 r-dnmrzs r-iphfwy r-1guathk r-1h8ys4a r-1otgn73 r-1i6wzkk r-lrvibr r-7xmw5f" style="transition-duration: 0s;"><div dir="auto" data-rnw-int-class="nearest___265-1748_" class="css-901oao css-vcwn7f r-1bnj018 r-gg6oyi r-1b43r93 r-16dba41 r-hbpseb r-1jkjb">Get a list of liquidity sources on Fantom</div></a></div></div></div></div></div></div>
+</div></div></div></div>
+
+<div id="portals-root"><div></div><div><div data-rnw-media-class="1609__1608" class="css-1dbjc4n r-u8s1d r-l13dpy"></div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></body></html>
