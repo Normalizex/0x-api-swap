@@ -1,0 +1,24 @@
+{
+  "name": "@normalizex/0x-api-swap",
+  "version": "1.0.0",
+  "description": "library targeting of the 0x DeFi aggregator API.",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "engines": {
+    "node": ">=11.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Normalizex/0x-api-swap.git"
+  },
+  "homepage": "https://github.com/Normalizex/1inch-api-v4#readme",
+  "author": "Normalizex",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
