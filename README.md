@@ -29,15 +29,19 @@ yarn add @normalizex/0x-api-swap
 ***
 # Usage:
 ```js
-import { OxSwapV1, NetworksV1 } from '@normalizex/0x-api-swap';
-const oxorg = new OxSwapV1(NetworksV1.Ethereum);
+import { OxSwapV1, OxNetworksV1 } from '@normalizex/0x-api-swap';
+const oxorg = new OxSwapV1(OxNetworksV1.Ethereum);
 ```
 # Example
 ```js
-import { OxSwapV1, NetworksV1 } from '@normalizex/0x-api-swap';
+import { OxSwapV1, OxNetworksV1 } from '@normalizex/0x-api-swap';
 
-const oxorg = new OxSwapV1(NetworksV1.BinanceSmartChain);
+const oxorg = new OxSwapV1(OxNetworksV1.Optimism);
 
+console.log(oxorg.endpoint());//https://optimism.api.0x.org/swap/v1
+console.log(oxorg.network());//optimism
+// Switch Network:
+oxorg.swichEndpoint(OxNetworksV1.BinanceSmartChain)
 console.log(oxorg.endpoint());//https://bsc.api.0x.org/swap/v1
 console.log(oxorg.network());//bsc
 

@@ -6,7 +6,7 @@ import { PriceParamsV1, PriceResponseV1, QuoteParamsV1, QuoteResponseV1 } from '
  * @readonly
  * @enum {string}
 */
-export const NetworksV1 = {
+export const OxNetworksV1 = {
 	Ethereum: "ethereum",
 	EthereumRopsten: "ropsten",
 	Polygon: "polygon",
@@ -118,7 +118,7 @@ class OxSwapV1 {
 		if (!network) throw new Error('Invalid network endpoint');
 
 		this._network = network;
-		this._baseUrl = `https://${this._network !== NetworksV1.Ethereum ? `${this._network}.` : ''}api.0x.org/swap/v1`;
+		this._baseUrl = `https://${this._network !== OxNetworksV1.Ethereum ? `${this._network}.` : ''}api.0x.org/swap/v1`;
 	}
 
 	/**
@@ -128,7 +128,7 @@ class OxSwapV1 {
 		if (!network) throw new Error('Invalid network endpoint');
 
 		this._network = network;
-		this._baseUrl = `https://${this._network !== NetworksV1.Ethereum ? `${this._network}.` : ''}api.0x.org/swap/v1`;
+		this._baseUrl = `https://${this._network !== OxNetworksV1.Ethereum ? `${this._network}.` : ''}api.0x.org/swap/v1`;
 	}
 };
 
