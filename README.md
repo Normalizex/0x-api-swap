@@ -1,8 +1,7 @@
 # 0x-api-swap
 ![](./media/0x-api.png)
 
-
-* `Simple 0x api v4 wrapper for node.js`
+* `Simple 0x api v4 wrapper`
 * `Node.js >= v11.0.0`
 * `TypeScript >= 4.6.3`
 ***
@@ -12,6 +11,7 @@
 # Features
 * Full API coverage.
 * Typescript support.
+* Browser script support.
 * Fully covered with annotations and comments.
 ***
 # Installing
@@ -23,6 +23,7 @@ Using yarn:
 ```console
 yarn add @normalizex/0x-api-swap
 ```
+Using jsDelivr CDN:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@normalizex/0x-api-swap/dist/index.browser.min.js"></script>
 ```
