@@ -22,7 +22,7 @@ export const OxNetworksV1 = {
  * @constructor
  * @public
  */
-class OxSwapV1 {
+export class OxSwapV1 {
 	private _baseUrl: string;
 	private _network: string;
 
@@ -132,4 +132,4 @@ class OxSwapV1 {
 	}
 };
 
-export { OxSwapV1 };
+export default OxSwapV1;
