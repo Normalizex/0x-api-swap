@@ -35,9 +35,14 @@ Using unpkg CDN:
 * You can find full documentation in the folder [docs/README.md](./docs/README.md) 
 ***
 # Usage:
-NodeJS:
+NodeJS (ES6):
 ```js
 import OxSwapV1, { OxNetworksV1 } from '@normalizex/0x-api-swap';
+const oxorg = new OxSwapV1(OxNetworksV1.Ethereum);
+```
+NodeJS (commonjs)
+```js
+const { OxSwapV1, OxNetworksV1 } = require('@normalizex/1inch-api-v4');
 const oxorg = new OxSwapV1(OxNetworksV1.Ethereum);
 ```
 Browser:
